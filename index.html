@@ -6,56 +6,30 @@
   <title>Coffee World</title>
   <link rel="stylesheet" href="css/style.css" />
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <script src="data/data.js"></script>
 </head>
+
 <body>
   <div id="app" class="container">
-    <div class="card">
-      <img :src="currentCoffee.img" alt="coffee image" class="coffee-img" />
-      <transition name="fade" mode="out-in">
-        <h2 v-if="showTitle" key="title">{{ currentCoffee.title }}</h2>
-        <p v-else key="desc">{{ currentCoffee.desc }}</p>
-      </transition>
-      <div class="buttons">
-        <button @click="toggleText">
-          {{ showTitle ? 'Show Description' : 'Show Title' }}
-        </button>
-        <button @click="prevCoffee">Previous</button>
-        <button @click="nextCoffee">Next</button>
+    <transition name="fade" mode="out-in">
+      <div class="card" :key="index">
+        <img :src="currentCoffee.img" alt="coffee image" class="coffee-img" />
+
+        <transition name="fade" mode="out-in">
+          <h2 v-if="showTitle" key="title">{{ currentCoffee.title }}</h2>
+          <p v-else key="desc">{{ currentCoffee.desc }}</p>
+        </transition>
+
+        <div class="buttons">
+          <button @click="toggleText">
+            {{ showTitle ? 'Show Description' : 'Show Title' }}
+          </button>
+          <button @click="prevCoffee">Previous</button>
+          <button @click="nextCoffee">Next</button>
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 
-  <script>
-    const app = Vue.createApp({
-      data() {
-        return {
-          coffees,
-          index: 0,
-          showTitle: true
-        };
-      },
-      computed: {
-        currentCoffee() {
-          return this.coffees[this.index];
-        }
-      },
-      methods: {
-        nextCoffee() {
-          this.index = (this.index + 1) % this.coffees.length;
-          this.showTitle = true;
-        },
-        prevCoffee() {
-          this.index = (this.index - 1 + this.coffees.length) % this.coffees.length;
-          this.showTitle = true;
-        },
-        toggleText() {
-          this.showTitle = !this.showTitle;
-        }
-      }
-    });
-
-    app.mount('#app');
-  </script>
+  <script src="js/script.js"></script>
 </body>
 </html>
